@@ -1,8 +1,8 @@
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import type { UserConfig, ConfigEnv, ProxyOptions } from 'vite'
-import { isProd, loadEnv } from '/@/utils/vite'
-import { svgBuilder } from '/@/components/icon/svg/index'
+import { isProd, loadEnv } from './src/utils/vite'
+import { svgBuilder } from './src/components/icon/svg/index'
 
 const pathResolve = (dir: string): any => {
     return resolve(__dirname, '.', dir)
