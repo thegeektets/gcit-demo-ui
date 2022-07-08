@@ -44,6 +44,7 @@ index().then((res) => {
 
 <style scoped lang="scss">
 .container {
+<<<<<<< HEAD
   width: 100vw;
   height: 100vh;
   background: url(/@/assets/login-header.png) repeat;
@@ -82,9 +83,6 @@ index().then((res) => {
   box-shadow: none !important;
   position: fixed;
   width: 100%;
-  :deep(.header-logo) {
-    span {
-      padding-left: 4px;
       color: var(--color-basic-white);
     }
   }
@@ -125,5 +123,42 @@ index().then((res) => {
   .main-right img {
     width: 300px !important;
   }
+=======
+    width: 100vw;
+    height: 100vh;
+    background: url(/@/assets/login-header.png) repeat;
+    color: var(--color-primary);
+    .main {
+        height: calc(100vh - 120px);
+        padding: 0;
+        .main-container {
+            display: flex;
+            height: 100%;
+            width: 66%;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            .main-left {
+                padding-right: 50px;
+                .main-title {
+                    font-size: 45px;
+                }
+                .main-content {
+                    padding-top: 20px;
+                    padding-bottom: 40px;
+                    font-size: var(--el-font-size-large);
+                }
+            }
+            .main-right {
+                img {
+                    width: 380px;
+                }
+            }
+        }
+    }
 }
-</style>
+.header {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    position: fixed;
+    width: 100%;
