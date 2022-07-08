@@ -2,6 +2,7 @@
 <div>
     <Navg />
     <h3> Bookings page</h3>
+    <h2>recent</h2>
 </div>
 
 </template>
