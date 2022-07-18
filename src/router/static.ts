@@ -55,7 +55,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
         name: 'adminbookings',
         component: () => import('/@/layouts/backend/adminBookings.vue'),
         meta: {
-            title: ('Navg'),
+            title: ('Bookings'),
         },
     },
     {

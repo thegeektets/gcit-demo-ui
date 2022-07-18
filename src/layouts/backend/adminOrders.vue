@@ -1,11 +1,11 @@
 <template>
-<div>
+<div class="orders">
     <Navg />
   <h3>Search orders by plate_number</h3>
   <el-col :span="8">
   <el-input v-model="search" placeholder="Type to search" style="display;block;margin:1rem auto"/>
   </el-col>
-  <el-table :data="filterOrders" style="width: 100%" :header-cell-style="{background: '#409eff'}" :header-row-style="{color: 'white'}">
+  <el-table :data="filterOrders" style="width: 100%" :scrollable="true" scrollHeight="400px" :header-cell-style="{background: '#409eff'}" :header-row-style="{color: 'white'}">
         <el-table-column type="index"/>
         <!-- <el-table-column prop="order_no" label="Order Number"/> -->
         <el-table-column prop="name" label="Name"/>
@@ -72,5 +72,10 @@ const orders = [
 
 </script>
 <style scoped>
-
+.el-table {
+  border: 1px solid #c0c4cc;
+}
+.orders {
+  margin:70px 5px 5px 5px;
+}
 </style>

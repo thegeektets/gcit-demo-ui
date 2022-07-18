@@ -1,54 +1,50 @@
 <template>
-<div>
-  <el-container>
-    <el-col 
-        :span="3"  
-        :xs="12"
-        :sm="6"
-        :md="4"
-        :lg="4">
-      <form @submit.prevent="getData">
-        <el-input v-model="search" placeholder="Type to search" style="display;block;margin:1rem auto"/>
-        <input type="submit" class="btn btn-primary" style="display;block;margin:1rem auto">
-      </form>
-    </el-col>
-    <el-row>
+  <div>
+    <Navg />
+    <el-container style="height: 300">
+      <el-col :span="3" :xs="8" :sm="6" :md="4" :lg="4">
+        <form >
+          <el-input placeholder="Type to search" style="display;block;margin:1rem auto" />
+          <input type="submit" class="btn btn-primary" style="display;block;margin:1rem auto">
+        </form>
+      </el-col>
+      <el-row>
 
         <!-- {{vehicles}} -->
 
-      <el-col
-        v-for="(vehicle) in vehicles"
-        :key="vehicle"
-        :span="6"
-        :xs="8"
-        :sm="6"
-        :md="4"
-        :lg="4"
-      >
-        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-          <div style="padding: 0px">
-            <img :src="getPhoto(vehicle.photos)" class="image white--text align-end" />
-          </div>
-
-          <div class="content" style="padding: 14px">
-            <div class="title">{{ vehicle.make }} {{ vehicle.model }}</div>
-              <div class="cost">{{ vehicle.currency }} {{ vehicle.cost }}</div>
-              <div class="plate_number">
-                {{ vehicle.plate_number }}
-              </div>
-
-              <div class="location">
-                {{ vehicle.location_name }}
-              </div>
-              <div class="days">
-                {{ vehicle.days }}
-              </div>
-              <div class="seats">{{ vehicle.seats_number }} seats</div>
+        <el-col v-for="(vehicle) in vehicles" :key="vehicle" :span="6" :xs="12" :sm="8" :md="4" :lg="4">
+          <el-card shadow="hover" :body-style="{ padding: '0px' }">
+            <div style="padding: 0px">
+              <img :src="getPhoto(vehicle['photos'])" class="image white--text align-end" />
             </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </el-container>
+
+            <div class="content" style="padding: 14px">
+              <div class="title">{{ vehicle['make'] }} {{ vehicle['model'] }}</div>
+              <div class="cost">
+                <Icon name="fa fa-money" size="13" />
+                {{ vehicle['currency'] }} {{ vehicle['cost'] }}
+                </div>
+              <div class="plate_number">
+                <Icon name="fa fa-dot-circle-o" size="13" />
+                {{ vehicle['plate_number'] }}
+              </div>
+              <div class="location">
+                <Icon name="fa fa-map-marker" size="13" />
+                {{ vehicle['location_name'] }}
+              </div>
+              <!-- <div class="days">
+                <Icon name="fa fa-calendar" size="13" />
+                {{ vehicle.days }}
+              </div> -->
+              <div class="seats">
+                <Icon name="fa fa-person-seat" size="13" />
+                {{ vehicle['seats_number'] }} seats
+                </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-container>
   </div>
 </template>
 
@@ -58,22 +54,21 @@ import axios from "axios";
 export default {
   data() {
     return {
-        vehicles:[],
-        };
+      vehicles: [],
+    };
   },
 
   methods: {
     getVehicles() {
       axios.post("http://167.172.1.174/search").then((response) => {
         this.vehicles = response.data.vehicles;
-        console.log(response);
-        console.log("response.data.Vehicles;", response.data.vehicles);
+        console.log(response.data.vehicles);
       });
     },
-    getPhoto(photoArray){
-        let photoArrayObject = JSON.parse(photoArray);
-        // console.log(photoArrayObject);
-        return photoArrayObject[0];
+    getPhoto(photoArray: string) {
+      let photoArrayObject = JSON.parse(photoArray);
+      // console.log(photoArrayObject);
+      return photoArrayObject[0];
 
     }
   },
@@ -83,21 +78,32 @@ export default {
 };
 </script>
 
+<script lang="ts" setup>
+import Navg from "./components/navg.vue";
+
+</script>
+
 <style scoped>
-.image { 
-  width: 100%;
+.image {
+  width: 150px;
   height: 130px;
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
+
 .el-container {
-  margin: 40px;
+  margin: 90px 30px 30px 30px;
 }
+
 .el-card {
   margin: 10px;
-  padding: opx;
   max-width: 150px;
-  height: 250px;
+  height: 270px;
+  box-shadow: 0 5px 3px grey;
   border-radius: 6px;
 }
+
 .seats,
 .location,
 .days,
@@ -107,7 +113,9 @@ export default {
   font-weight: 500;
   color: black;
 }
+
 .cost {
   color: #ff5252;
 }
+
 </style>

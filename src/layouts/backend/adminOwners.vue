@@ -10,7 +10,6 @@
       />
     </el-col>
     <!-- <h3>Delete Owners by Rows</h3> -->
-    <!-- <el-table :data="filterTableData" style="width: 100%"> -->
     <el-table :data="owners" style="width: 100%" :header-cell-style="{background: '#409eff'}" :header-row-style="{color: 'white'}">
       <el-table-column type="expand">
       <template #default>
@@ -19,7 +18,6 @@
         </div>
       </template>
       </el-table-column>
-      <!-- <el-table-column type="index" /> -->
       <el-table-column prop="name" label="Name" />
       <el-table-column prop="contact_person_phone" label="Phone" />
       <el-table-column prop="location_name" label="Location" />
@@ -425,4 +423,10 @@ const filterOwners = computed(() =>
 </script>
  
 <style scoped>
+.el-table {
+  border: 1px solid #c0c4cc;
+}
+.owners {
+  margin:60px 5px 5px 5px;
+}
 </style>

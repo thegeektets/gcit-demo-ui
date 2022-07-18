@@ -9,7 +9,6 @@ import pinia from './stores/index'
 import { directives } from './utils/directives'
 import 'element-plus/dist/index.css'
 import '/@/styles/base.scss'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 
 async function start() {
@@ -29,8 +28,5 @@ async function start() {
 
     app.config.globalProperties.eventBus = mitt()
 
-    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-        app.component(key, component)
-      }
 }
 start()
