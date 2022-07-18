@@ -20,8 +20,8 @@ async function start() {
     const i18n = await loadLang(app)
     app.use(ElementPlus, { i18n: i18n.global.t })
 
-    directives(app) // instruction
-    registerIcons(app) // icons
+    // directives(app) // instruction
+    // registerIcons(app) // icons
 
     app.mount('#app')
     

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header />
     <el-container class="container">
       <el-main class="main">
         <div class="main-container">
@@ -10,7 +9,7 @@
               {{ $t("index.Steve Jobs") }}
             </div>
             <el-button
-              @click="$router.push('/user')"
+              @click="$router.push('/admin/login')"
               color="#FFFFFF"
               size="large"
               >{{ $t("index.Member Center") }}</el-button
@@ -22,24 +21,20 @@
         </div>
       </el-main>
     </el-container>
-    <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
 import indexCover from "/@/assets/index/index-cover.svg";
-import { index } from "/@/api/frontend/index";
 import { setTitle } from "/@/utils/common";
 import { useSiteConfig } from "/@/stores/siteConfig";
-import Header from "/@/layouts/frontend/components/header.vue";
-import Footer from "/@/layouts/frontend/components/footer.vue";
 
 const siteConfig = useSiteConfig();
 
-index().then((res) => {
-  setTitle(res.data.site.site_name);
-  siteConfig.$state = res.data.site;
-});
+// index().then((res) => {
+//   setTitle(res.data.site.site_name);
+//   siteConfig.$state = res.data.site;
+// });
 </script>
 
 <style scoped lang="scss">
