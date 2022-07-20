@@ -6,18 +6,19 @@ export const useAdminInfo = defineStore('adminInfo', {
     state: (): AdminInfo => {
         return {
             id: 0,
+            email: '',
             username: '',
             nickname: '',
             avatar: '',
             lastlogintime: '',
             token: '',
-            refreshToken: '',
+            fcm_token: '',
         }
     },
     actions: {
         removeToken() {
             this.token = ''
-            this.refreshToken = ''
+            this.fcm_token = ''
         },
     },
     persist: {

@@ -60,7 +60,7 @@ export default {
 
   methods: {
     getVehicles() {
-      axios.post("http://167.172.1.174/search").then((response) => {
+      axios.post("search").then((response) => {
         this.vehicles = response.data.vehicles;
         console.log(response.data.vehicles);
       });

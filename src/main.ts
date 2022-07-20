@@ -9,6 +9,7 @@ import pinia from './stores/index'
 import { directives } from './utils/directives'
 import 'element-plus/dist/index.css'
 import '/@/styles/base.scss'
+import './axios'
 
 
 async function start() {
@@ -21,7 +22,7 @@ async function start() {
     app.use(ElementPlus, { i18n: i18n.global.t })
 
     // directives(app) // instruction
-    // registerIcons(app) // icons
+    registerIcons(app) // icons
 
     app.mount('#app')
     

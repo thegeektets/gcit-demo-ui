@@ -20,13 +20,13 @@ export const useUserInfo = defineStore('userInfo', {
             jointime: '',
             motto: '',
             token: '',
-            refreshToken: '',
+            fcm_token: '',
         }
     },
     actions: {
         removeToken() {
             this.token = ''
-            this.refreshToken = ''
+            this.fcm_token = ''
         },
         getGenderIcon() {
             let icon = { name: 'fa fa-transgender-alt', color: 'var(--color-info)' }

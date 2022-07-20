@@ -30,6 +30,21 @@ export function validatorAccount(rule: any, val: string, callback: Function) {
     return callback()
 }
 
+// email
+export function regularEmail(val: string) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)) return true
+    return false
+}
+export function validatorEmail(rule: any, val: string, callback: Function) {
+    if (!val) {
+        return callback()
+    }
+    if (!regularEmail(val)) {
+        return callback(new Error(i18n.global.t('Please enter the correct email')))
+    }
+    return callback()
+}
+
 /**
  * 密码验证
  */
@@ -109,6 +124,7 @@ export function buildValidatorData(ruleName: string, title: string = '', trigger
 
     // 自定义验证方法
     let validatorCustomFun: anyObj = {
+        email: validatorEmail,
         mobile: validatorMobile,
         account: validatorAccount,
         password: validatorPassword,

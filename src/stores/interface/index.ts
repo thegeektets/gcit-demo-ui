@@ -58,12 +58,13 @@ export interface MemberCenter {
 
 export interface AdminInfo {
     id: number
+    email: string
     username: string
     nickname: string
     avatar: string
     lastlogintime: string
     token: string
-    refreshToken: string
+    fcm_token: string
 }
 
 export interface UserInfo {
@@ -82,7 +83,7 @@ export interface UserInfo {
     jointime: string
     motto: string
     token: string
-    refreshToken: string
+    fcm_token: string
 }
 
 export interface TaskItem {

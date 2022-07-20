@@ -43,8 +43,7 @@
         <el-table-column prop="make" label="Make" width="130"/>
         <el-table-column prop="model" label="Model" width="130"/>
         <el-table-column prop="plate_number" label="Plate Number" width="130"/>
-        <el-table-column prop="booking_status" label="Booking Status" width="130">
-        </el-table-column>
+        <!-- <el-table-column prop="booking_status" label="Booking Status" width="130"/> -->
         <el-table-column prop="cost" label="Amount Paid" width="130"/>
     </el-table>
 </div>
@@ -61,7 +60,7 @@ import { containsProp } from "@vueuse/core";
 const bookings = ref([]);
 
 const token = 'Y2w1ajl3bzJ6MDAwMTQzMXE5ZmFxMTIwNQ.4H4qS9wsVrjF8zWjgMlKKI9lK1KHJQYTq1Bi8bPE60CKqoFsjiO6lgsHKh4E';
-axios.get('http://167.172.1.174/bookings',
+axios.get('bookings',
 {
       headers: {
         Authorization: `Bearer ${token}`
@@ -93,7 +92,6 @@ const filterBookings = computed(() =>
   )
 );
 
-console.log(moment("booking_status").utc().format('YYYY-MM-DD'));
 
 // let formattedUS = Intl.DateTimeFormat('en-US', {
 //   month: 'long',
