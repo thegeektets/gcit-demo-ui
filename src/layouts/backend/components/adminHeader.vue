@@ -1,6 +1,12 @@
 <template>
   <el-header class="header--wrap">
-    <img src="../../../assets/meight-logo-red.png" alt="logo" class="navg--logo" />
+    <router-link to="/">
+      <img
+        src="../../../assets/meight-logo-red.png"
+        alt="logo"
+        class="navg--logo"
+      />
+    </router-link>
   </el-header>
 </template>
 <script lang="ts" setup>
