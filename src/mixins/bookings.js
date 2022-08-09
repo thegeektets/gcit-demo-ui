@@ -85,7 +85,7 @@ methods: {
           });
 
           that.loading = false;
-          that.getBookings();
+          that.getBookings(this.bookingStatus);
         })
         .catch(function (error) {
           console.log("error", error);

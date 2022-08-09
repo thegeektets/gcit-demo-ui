@@ -93,9 +93,9 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="cost" label="Amount">
+        <el-table-column prop="booking_amount" label="Amount">
           <template #default="props">
-            {{ formatCurrency(props.row.cost) }}
+            {{ formatCurrency(props.row.booking_amount) }}
           </template>
         </el-table-column>
       </el-table>
