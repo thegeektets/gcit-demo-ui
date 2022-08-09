@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navg />
     <el-container style="height: 300">
       <el-col :span="3" :xs="8" :sm="6" :md="4" :lg="4">
         <form >
@@ -79,7 +78,6 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import Navg from "./components/navg.vue";
 
 </script>
 

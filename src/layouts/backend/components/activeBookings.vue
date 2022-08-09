@@ -42,6 +42,9 @@
                 </div>
                 <div class="booking-info-car--details">
                   <div class="booking-info-car--title">Car Details</div>
+                    <div class="booking-info-car--item">
+                    Number Plate : {{ props.row.plate_number }}
+                  </div>
                   <div class="booking-info-car--item">
                     Car Location : {{ props.row.location_name }}
                   </div>
@@ -70,8 +73,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="Customer Name" />
-        <el-table-column prop="phone" label="Customer Phone" />
+        <el-table-column prop="name" label="Customer" />
+        <el-table-column prop="phone" label="Phone No" />
         <el-table-column label="Pickup Date" :width="200">
           <template #default="props">
             {{ formatDate(props.row.pickup_date) }}
@@ -94,7 +97,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="plate_number" label="Plate Number" width="130" />
         <el-table-column prop="cost" label="Amount">
           <template #default="props">
             {{ formatCurrency(props.row.cost) }}
@@ -131,16 +133,9 @@ export default {
 };
 </script>
 <style scoped>
-/* .el-table {
-  border: 1px solid #c0c4cc;
-  margin-top: 50px;
-} */
-/* .bookings {
-   margin:70px 5px 5px 5px;
-} */
-.nav {
-  padding: 15px;
-  background-color: #ecf5ff;
+button.el-button.el-button--large {
+    display: block;
+    margin: 10px;
 }
 .booking-info--wrap {
   padding: 15px;

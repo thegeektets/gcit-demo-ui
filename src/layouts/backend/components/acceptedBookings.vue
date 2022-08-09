@@ -43,8 +43,14 @@
                 <div class="booking-info-car--details">
                   <div class="booking-info-car--title">Car Details</div>
                   <div class="booking-info-car--item">
+                    Number Plate : {{ props.row.plate_number }}
+                  </div>
+
+                  <div class="booking-info-car--item">
                     Car Location : {{ props.row.location_name }}
                   </div>
+
+
                 </div>
               </div>
               <div class="booking-actions">
@@ -66,8 +72,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="Customer Name" />
-        <el-table-column prop="phone" label="Customer Phone" />
+        <el-table-column prop="name" label="Customer" />
+        <el-table-column prop="phone" label="Phone No" />
         <el-table-column label="Pickup Date" :width="200">
           <template #default="props">
             {{ formatDate(props.row.pickup_date) }}
@@ -90,7 +96,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="plate_number" label="Plate Number" width="130" />
         <el-table-column prop="cost" label="Amount">
           <template #default="props">
             {{ formatCurrency(props.row.cost) }}

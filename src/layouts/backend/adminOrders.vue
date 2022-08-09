@@ -1,6 +1,5 @@
 <template>
 <div class="orders">
-    <Navg />
   <h3>Search orders by plate_number</h3>
   <el-col :span="8">
   <el-input v-model="search" placeholder="Type to search" style="display;block;margin:1rem auto"/>
@@ -32,7 +31,6 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import Navg from '/@/layouts/backend/components/navg.vue'
 
 
 const search = ref('')

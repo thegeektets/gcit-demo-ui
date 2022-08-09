@@ -1,6 +1,5 @@
 <template>
   <div class="owners">
-    <Navg />
 
     <el-col :span="8">
       <el-input
@@ -42,7 +41,6 @@
 
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import Navg from "/@/layouts/backend/components/navg.vue";
 
 const owners = ref([
   {
