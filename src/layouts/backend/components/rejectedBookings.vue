@@ -1,90 +1,188 @@
 <template>
-<div class="bookings">
-<div class="content">
-      
-  <!-- <el-input v-model="search" placeholder="Type to search" style="display;block;margin:1rem auto; width: 200px;"/>
-  
-  <el-button  plain @click="sortBy('booking_status')">
-      Sort Status
-    </el-button> -->
-  
-  
-    <!-- {{ bookings }} -->
-    
-    <el-table :data="bookings" style="width: 100%" :header-cell-style="{background: '#dd0e34'}" :header-row-style="{color: 'white'}">
-    <el-table-column type="expand">
-      <template #default="props">
-        <div>
-          <p m="t-0 b-2">Pickup Location: {{ props.row.pickup_location_coord }}</p>
-          <p m="t-0 b-2">Booking ID: {{ props.row.booking_id }}</p>
-          <p m="t-0 b-2">Customer ID: {{ props.row.customer_id }}</p>
-          <p m="t-0 b-2">Owner ID: {{ props.row.owner_id }}</p>
+  <div class="bookings">
+    <div class="content">
+      <el-table
+        fixed
+        v-loading="loading"
+        :data="bookings"
+        @expand-change="rowExpanded"
+        style="width: 100%"
+        :header-cell-style="{ background: '#DD0E34' }"
+        :header-row-style="{ color: 'white' }"
+      >
+        <el-table-column type="expand" fixed>
+          <template #default="props">
+            <div class="booking-info--wrap">
+              <div class="booking-info--images">
+                <el-carousel>
+                  <el-carousel-item
+                    v-for="(photo, index) in formatJSON(props.row.photos)"
+                    :key="index"
+                  >
+                    <img :src="photo" class="booking-info--image" />
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+              <div class="booking-info--details">
+                <div class="booking-info-owner--details">
+                  <div class="booking-info-owner--title">Owner Details</div>
+                  <div class="booking-info-owner--item">
+                    Owner Name : {{ ownerDetails[props.$index]["name"] }}
+                  </div>
+                  <div class="booking-info-owner--item">
+                    Owner Location :
+                    {{ ownerDetails[props.$index]["location_name"] }}
+                  </div>
+                  <div class="booking-info-owner--item">
+                    Owner Email : {{ ownerDetails[props.$index]["email"] }}
+                  </div>
+                  <div class="booking-info-owner--item">
+                    Owner Phone : {{ ownerDetails[props.$index]["phone"] }}
+                  </div>
+                </div>
+                <div class="booking-info-car--details">
+                  <div class="booking-info-car--title">Car Details</div>
+                  <div class="booking-info-car--item">
+                    Car Location : {{ props.row.location_name }}
+                  </div>
+                </div>
+              </div>
+              <div class="booking-actions">
+                <div class="booking-actions--title">
+                  Created On : {{ formatDate(props.row.booking_created_at) }}
+                </div>
+                <div class="booking-actions--title">
+                  Updated On : {{ formatDate(props.row.booking_updated_at) }}
+                </div>
 
-        </div>
-      </template>
-      </el-table-column>
-        <!-- <el-table-column prop="booking_id" label="Booking ID" width="130"/>
-        <el-table-column prop="customer_id" label="Customer ID" width="130"/> -->
-        <el-table-column prop="name" label="Name" width="170"/>
-        <!-- <el-table-column prop="owner_id" label="Owner ID" width="130"/> -->
-        <el-table-column prop="pickup_date" label="Pickup Date" width="130" class="pick"/>
-        <el-table-column prop="return_date" label="Return Date" width="130" class="v"/>
-        <el-table-column prop="pickup_location_name" label="Pickup Location" width="200"/>
-        <!-- <el-table-column prop="pickup_location_coord" label="Pickup Location" width="170"/> -->
-        <el-table-column prop="make" label="Make" width="130"/>
-        <el-table-column prop="model" label="Model" width="130"/>
-        <el-table-column prop="plate_number" label="Plate Number" width="130"/>
-        <!-- <el-table-column prop="booking_status" label="Booking Status" width="130"/> -->
-        <el-table-column prop="cost" label="Amount Paid" width="130"/>
-    </el-table>
-</div>
-</div>
+                <el-button
+                  @click="bookingAction(4, props.row.booking_id)"
+                  color="#DD0E34"
+                  size="large"
+                >
+                  Cancel Booking
+                </el-button>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="name" label="Customer Name" />
+        <el-table-column prop="phone" label="Customer Phone" />
+        <el-table-column label="Pickup Date" :width="200">
+          <template #default="props">
+            {{ formatDate(props.row.pickup_date) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Return Date" :width="200">
+          <template #default="props">
+            {{ formatDate(props.row.return_date) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          prop="pickup_location_name"
+          label="Pickup Location"
+          width="200"
+        />
+        <el-table-column label="Car Type">
+          <template #default="props">
+            {{ props.row.make }} {{ props.row.model }}
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="plate_number" label="Plate Number" width="130" />
+        <el-table-column prop="cost" label="Amount">
+          <template #default="props">
+            {{ formatCurrency(props.row.cost) }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </div>
 </template>
 
 
-<script setup lang="ts">
-import axios from "axios";
-import { computed, ref } from 'vue';
+<script>
+import formatters from "../../../mixins/formatters";
+import bookings from "../../../mixins/bookings";
 
-const bookings = ref([]);
+export default {
+  mixins: [formatters, bookings],
 
-const token = 'Y2w1ajl3bzJ6MDAwMTQzMXE5ZmFxMTIwNQ.4H4qS9wsVrjF8zWjgMlKKI9lK1KHJQYTq1Bi8bPE60CKqoFsjiO6lgsHKh4E';
-axios.get('bookings',
-{
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      params: {
-        status: 4,
-
-      }
-    })
-    .then(function(response) {
-      bookings.value = response.data.bookings;
-      // console.log(response.data.bookings)
-    });
-    
-    
-// function sortBy(prop: string) {
-//   bookings.value.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
-// };
-
-// const search = ref('')
-// const filterBookings = computed(() =>
-//   bookings.value.filter(
-//     (data) =>
-//       !search.value ||
-//       data.model.toLowerCase().includes(search.value.toLowerCase())
-//   )
-// );
-
+  data() {
+    return {
+      loading: false,
+      bookings: [],
+      userId: 4,
+      ownerDetails: [],
+      bookingStatus: 3,
+      token:
+        "Y2w2bTFqajJtMDAwMHczeGQzeWpkNWJpaQ.2G4Ntk-QqD8lUrtYuw0eg5dembtJKkQnE0XRcKwJ5aTcLfK_07YA84vGT2-F",
+    };
+  },
+  mounted() {
+    this.getBookings(this.bookingStatus);
+  },
+};
 </script>
 
 <style scoped>
+/* .el-table {
+  border: 1px solid #c0c4cc;
+  margin-top: 50px;
+} */
+/* .bookings {
+   margin:70px 5px 5px 5px;
+} */
 .nav {
   padding: 15px;
   background-color: #ecf5ff;
 }
-
+.booking-info--wrap {
+  padding: 15px;
+}
+.booking-info--images {
+  background: #f1f1f1;
+  width: 40%;
+  float: left;
+  margin-right: 20px;
+  height: 250px;
+  margin-bottom: 20px;
+}
+.booking-info--image {
+  object-fit: contain;
+  width: 100%;
+  height: 250px;
+}
+.booking-info--details {
+  width: 30%;
+  float: left;
+}
+.booking-actions {
+  width: 25%;
+  float: right;
+}
+.booking-actions--title {
+  color: #2856b8;
+  margin-bottom: 25px;
+}
+.booking-info-owner--title {
+  color: #dd0e34;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+.booking-info-owner--item {
+  margin-bottom: 10px;
+}
+.booking-info-car--title {
+  color: #dd0e34;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+.booking-info-car--item {
+  margin-bottom: 10px;
+}
 </style>
 
