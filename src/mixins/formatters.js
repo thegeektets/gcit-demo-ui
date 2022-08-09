@@ -13,5 +13,9 @@ export default {
 
       return formatter.format(amount);
     },
+
+    formatJSON(json) {
+        return JSON.parse(json);
+    }
   },
 };

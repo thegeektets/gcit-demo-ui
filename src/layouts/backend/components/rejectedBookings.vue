@@ -11,7 +11,7 @@
   
     <!-- {{ bookings }} -->
     
-    <el-table :data="bookings" style="width: 100%" :header-cell-style="{background: '#409eff'}" :header-row-style="{color: 'white'}">
+    <el-table :data="bookings" style="width: 100%" :header-cell-style="{background: '#dd0e34'}" :header-row-style="{color: 'white'}">
     <el-table-column type="expand">
       <template #default="props">
         <div>
