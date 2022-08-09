@@ -1,19 +1,16 @@
 <template>
 <Navg/>
   <el-tabs type="border-card">
-    <el-tab-pane label="Bookings">
-      <AllBookings/>
-    </el-tab-pane>
-    <el-tab-pane label="Active">
+    <el-tab-pane label="Active Bookings">
       <ActiveBookings/>
     </el-tab-pane>
-    <el-tab-pane label="Accepted">
+    <el-tab-pane label="Accepted Bookings">
       <AcceptedBookings/>
     </el-tab-pane>
-    <el-tab-pane label="Rejected">
+    <el-tab-pane label="Rejected Bookings">
       <RejectedBookings/>
     </el-tab-pane>
-    <el-tab-pane label="Cancelled">
+    <el-tab-pane label="Cancelled Bookings">
       <CancelledBookings/>
     </el-tab-pane>
   </el-tabs>

@@ -9,8 +9,8 @@
               {{ $t("index.Steve Jobs") }}
             </div>
             <el-button
-              @click="$router.push('/admin/login')"
-              color="#FFFFFF"
+              @click="$router.push('/admin/bookings')"
+              color="#2856b8"
               size="large"
               >{{ $t("index.Member Center") }}</el-button
             >
@@ -38,6 +38,14 @@ const siteConfig = useSiteConfig();
 </script>
 
 <style scoped lang="scss">
+.main-title {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  color: #dd0e34;
+}
+.main-content {
+  color: #333;
+}
 .container {
   width: 100vw;
   height: 100vh;

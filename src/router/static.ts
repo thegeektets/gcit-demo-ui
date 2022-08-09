@@ -89,42 +89,5 @@ const staticRoutes: Array<RouteRecordRaw> = [
     },
 ]
 
-/*
- * 后台基础静态路由
- */
-const adminBaseRoute: RouteRecordRaw = {
-    path: '/admin',
-    name: 'admin',
-    component: () => import('/@/layouts/backend/index.vue'),
-    redirect: '/admin/loading',
-    meta: {
-        title: pageTitle('admin'),
-    },
-    children: [
-        {
-            path: 'loading',
-            name: 'adminMainLoading',
-            component: () => import('/@/layouts/common/components/loading.vue'),
-            meta: {
-                title: pageTitle('Loading'),
-            },
-        },
-        {
-            path: 'iframe/:url',
-            name: 'layoutIframe',
-            component: () => import('/@/layouts/common/router-view/iframe.vue'),
-            meta: {
-                title: pageTitle('Embedded iframe'),
-            },
-        },
-    ],
-}
 
-/*
- * 会员中心基础静态路由
- */
-
-
-staticRoutes.push(adminBaseRoute)
-
-export { staticRoutes, adminBaseRoute }
+export { staticRoutes }

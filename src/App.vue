@@ -27,3 +27,6 @@ watch(
     }
 )
 </script>
+<style>
+@import url('./styles/app.scss');
+</style>
