@@ -24,18 +24,14 @@
         <el-table-column prop="phone" label="Customer Phone" />
         <el-table-column label="Pickup Date" :width="200">
           <template #default="props">
-            {{
-              formatDate(props.row.pickup_date)
-            }}
+            {{ formatDate(props.row.pickup_date) }}
           </template>
         </el-table-column>
         <el-table-column label="Return Date" :width="200">
-            <template #default="props">
-            {{
-              formatDate(props.row.return_date)
-            }}
+          <template #default="props">
+            {{ formatDate(props.row.return_date) }}
           </template>
-          </el-table-column>
+        </el-table-column>
 
         <el-table-column
           prop="pickup_location_name"
@@ -49,8 +45,11 @@
         </el-table-column>
 
         <el-table-column prop="plate_number" label="Plate Number" width="130" />
-        <!-- <el-table-column prop="booking_status" label="Booking Status" width="130"/> -->
-        <el-table-column prop="cost" label="Amount" />
+        <el-table-column prop="cost" label="Amount">
+          <template #default="props">
+            {{ formatCurrency(props.row.cost) }}
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -59,21 +58,17 @@
 
 <script>
 import axios from "axios";
-import { format, parseISO } from 'date-fns'
+import formatters from "../../../mixins/formatters";
 
-// import moment from 'moment';
 export default {
+  mixins: [formatters],
+
   data() {
     return {
       bookings: [],
       token:
         "Y2w1ajl3bzJ6MDAwMTQzMXE5ZmFxMTIwNQ.4H4qS9wsVrjF8zWjgMlKKI9lK1KHJQYTq1Bi8bPE60CKqoFsjiO6lgsHKh4E",
     };
-  },
-  methods: {
-    formatDate(date) {
-      return format(parseISO(date), "MMM do yyyy, h:mm a")
-    }
   },
 
   mounted() {

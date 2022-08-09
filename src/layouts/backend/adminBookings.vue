@@ -1,7 +1,7 @@
 <template>
 <Navg/>
   <el-tabs type="border-card">
-    <el-tab-pane label="Active Bookings">
+    <el-tab-pane label="Pending Bookings">
       <ActiveBookings/>
     </el-tab-pane>
     <el-tab-pane label="Accepted Bookings">
