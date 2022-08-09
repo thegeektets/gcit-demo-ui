@@ -48,17 +48,22 @@
                 </div>
               </div>
               <div class="booking-actions">
+                <div class="booking-actions--title">
+                  Created On : {{ formatDate(props.row.booking_created_at) }}
+                </div>
                 <el-button
-                  @click="confirmBooking()"
+                  @click="bookingAction(2, props.row.booking_id)"
                   color="#2856b8"
-                  size="large">
+                  size="large"
+                >
                   Confirm Booking
                 </el-button>
 
-                 <el-button
-                  @click="confirmBooking()"
+                <el-button
+                  @click="bookingAction(3, props.row.booking_id)"
                   color="#DD0E34"
-                  size="large">
+                  size="large"
+                >
                   Reject Booking
                 </el-button>
               </div>
@@ -103,6 +108,7 @@
 <script>
 import axios from "axios";
 import formatters from "../../../mixins/formatters";
+import { ElNotification } from "element-plus";
 
 export default {
   mixins: [formatters],
@@ -111,43 +117,46 @@ export default {
     return {
       loading: false,
       bookings: [],
+      userId: 4,
       ownerDetails: [],
       token:
-        "Y2w1ajl3bzJ6MDAwMTQzMXE5ZmFxMTIwNQ.4H4qS9wsVrjF8zWjgMlKKI9lK1KHJQYTq1Bi8bPE60CKqoFsjiO6lgsHKh4E",
+        "Y2w2bTFqajJtMDAwMHczeGQzeWpkNWJpaQ.2G4Ntk-QqD8lUrtYuw0eg5dembtJKkQnE0XRcKwJ5aTcLfK_07YA84vGT2-F",
     };
   },
 
   mounted() {
-    let that = this;
-    this.loading = true;
-    axios
-      .get("bookings", {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-        params: {
-          status: 1,
-        },
-      })
-      .then(function (response) {
-        let _bookings = response.data.bookings;
-        if (_bookings) {
-          that.bookings = _bookings;
-          that.loading = false;
-        }
-      });
+    this.getBookings();
   },
   methods: {
+    async getBookings() {
+      let that = this;
+      this.loading = true;
+      await axios
+        .get("bookings", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+          params: {
+            status: 1,
+          },
+        })
+        .then(function (response) {
+          let _bookings = response.data.bookings;
+          if (_bookings) {
+            that.bookings = _bookings;
+            that.loading = false;
+          }
+        });
+    },
     rowExpanded(row) {
       let ownerId = row.owner_id;
       console.log("ownerId", ownerId);
       this.getOwnerDetails(ownerId, row);
     },
-    getOwnerDetails(ownerId, row) {
+    async getOwnerDetails(ownerId, row) {
       let that = this;
-
       let _ownerDetails = {};
-      axios
+      await axios
         .get(`user/${ownerId}`, {
           headers: {
             Authorization: `Bearer ${this.token}`,
@@ -167,6 +176,55 @@ export default {
             console.log("index", index);
             that.ownerDetails[index] = _ownerDetails;
           }
+        });
+    },
+    async bookingAction(action, bookingId) {
+      console.log("bookingId", bookingId);
+      console.log("action", action);
+      let that = this;
+      this.loading = true;
+      let userId = this.userId;
+      let payload = {
+        booking_status: action,
+        user_id: userId,
+      };
+
+      axios
+        .put(
+          `booking/${bookingId}`,
+          {
+            ...payload,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + this.token,
+            },
+          }
+        )
+        .then(function (response) {
+          let _type = action == 2 ? "success" : "warning";
+          ElNotification({
+            title: "Update booking",
+            message: response.message,
+            type: _type,
+          });
+
+          that.loading = false;
+          that.getBookings();
+        })
+        .catch(function (error) {
+          console.log("error", error);
+          let message =
+            "message" in error.response.data
+              ? error.response.data.message
+              : "An error occurred, could not process request";
+          ElNotification({
+            title: "Update booking",
+            message,
+            type: "error",
+          });
+
+          that.loading = false;
         });
     },
   },
@@ -206,8 +264,12 @@ export default {
   float: left;
 }
 .booking-actions {
-  width: 30%;
+  width: 25%;
   float: right;
+}
+.booking-actions--title {
+  color: #2856b8;
+  margin-bottom: 25px;
 }
 .booking-info-owner--title {
   color: #dd0e34;
