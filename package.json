@@ -12,6 +12,7 @@
         "@wangeditor/editor-for-vue": "~5.1.12",
         "axios": "~0.26.0",
         "countup.js": "~2.0.8",
+        "date-fns": "^2.29.1",
         "echarts": "~5.2.2",
         "element-plus": "~2.2.5",
         "esno": "~0.14.1",

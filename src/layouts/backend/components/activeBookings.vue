@@ -1,84 +1,100 @@
 <template>
-<div class="bookings">
-<div class="content">
-      
-  <!-- <el-input v-model="search" placeholder="Type to search" style="display;block;margin:1rem auto; width: 200px;"/>
-  
-  <el-button  plain @click="sortBy('booking_status')">
-      Sort Status
-    </el-button> -->
-  
-  
-    <!-- {{ bookings }} -->
-    
-    <el-table :data="bookings" style="width: 100%" :header-cell-style="{background: '#2856B8'}" :header-row-style="{color: 'white'}">
-    <el-table-column type="expand">
-      <template #default="props">
-        <div>
-          <p m="t-0 b-2">Pickup Location: {{ props.row.pickup_location_coord }}</p>
-          <p m="t-0 b-2">Booking ID: {{ props.row.booking_id }}</p>
-          <p m="t-0 b-2">Customer ID: {{ props.row.customer_id }}</p>
-          <p m="t-0 b-2">Owner ID: {{ props.row.owner_id }}</p>
+  <div class="bookings">
+    <div class="content">
+      <el-table
+        :data="bookings"
+        style="width: 100%"
+        :header-cell-style="{ background: '#2856B8' }"
+        :header-row-style="{ color: 'white' }"
+      >
+        <el-table-column type="expand" fixed>
+          <template #default="props">
+            <div>
+              <p m="t-0 b-2">
+                Pickup Location: {{ props.row.pickup_location_coord }}
+              </p>
+              <p m="t-0 b-2">Booking ID: {{ props.row.booking_id }}</p>
+              <p m="t-0 b-2">Customer ID: {{ props.row.customer_id }}</p>
+              <p m="t-0 b-2">Owner ID: {{ props.row.owner_id }}</p>
+            </div>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="booking_id" label="Booking ID" width="130"/> -->
+        <el-table-column prop="name" label="Name" />
+        <el-table-column prop="phone" label="Customer Phone" />
+        <el-table-column label="Pickup Date" :width="200">
+          <template #default="props">
+            {{
+              formatDate(props.row.pickup_date)
+            }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Return Date" :width="200">
+            <template #default="props">
+            {{
+              formatDate(props.row.return_date)
+            }}
+          </template>
+          </el-table-column>
 
-        </div>
-      </template>
-      </el-table-column>
-        <!-- <el-table-column prop="booking_id" label="Booking ID" width="130"/>
-        <el-table-column prop="customer_id" label="Customer ID" width="130"/> -->
-        <el-table-column prop="name" label="Name" width="170"/>
-        <!-- <el-table-column prop="owner_id" label="Owner ID" width="130"/> -->
-        <el-table-column prop="pickup_date" label="Pickup Date" width="130" class="pick"/>
-        <el-table-column prop="return_date" label="Return Date" width="130" class="v"/>
-        <el-table-column prop="pickup_location_name" label="Pickup Location" width="200"/>
-        <!-- <el-table-column prop="pickup_location_coord" label="Pickup Location" width="170"/> -->
-        <el-table-column prop="make" label="Make" width="130"/>
-        <el-table-column prop="model" label="Model" width="130"/>
-        <el-table-column prop="plate_number" label="Plate Number" width="130"/>
+        <el-table-column
+          prop="pickup_location_name"
+          label="Pickup Location"
+          width="200"
+        />
+        <el-table-column label="Car Type">
+          <template #default="props">
+            {{ props.row.make }} {{ props.row.model }}
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="plate_number" label="Plate Number" width="130" />
         <!-- <el-table-column prop="booking_status" label="Booking Status" width="130"/> -->
-        <el-table-column prop="cost" label="Amount Paid" width="130"/>
-    </el-table>
-</div>
-</div>
+        <el-table-column prop="cost" label="Amount" />
+      </el-table>
+    </div>
+  </div>
 </template>
 
 
-<script setup lang="ts">
+<script>
 import axios from "axios";
-import { computed, ref } from 'vue';
+import { format, parseISO } from 'date-fns'
+
 // import moment from 'moment';
+export default {
+  data() {
+    return {
+      bookings: [],
+      token:
+        "Y2w1ajl3bzJ6MDAwMTQzMXE5ZmFxMTIwNQ.4H4qS9wsVrjF8zWjgMlKKI9lK1KHJQYTq1Bi8bPE60CKqoFsjiO6lgsHKh4E",
+    };
+  },
+  methods: {
+    formatDate(date) {
+      return format(parseISO(date), "MMM do yyyy, h:mm a")
+    }
+  },
 
-const bookings = ref([]);
-
-const token = 'Y2w1ajl3bzJ6MDAwMTQzMXE5ZmFxMTIwNQ.4H4qS9wsVrjF8zWjgMlKKI9lK1KHJQYTq1Bi8bPE60CKqoFsjiO6lgsHKh4E';
-axios.get('bookings',
-{
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      params: {
-        status: 1,
-
-      }
-    })
-    .then(function(response) {
-      bookings.value = response.data.bookings;
-      // console.log(response.data.bookings)
-    });
-    
-    
-// function sortBy(prop: string) {
-//   bookings.value.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
-// };
-
-// const search = ref('')
-// const filterBookings = computed(() =>
-//   bookings.value.filter(
-//     (data) =>
-//       !search.value ||
-//       data.model.toLowerCase().includes(search.value.toLowerCase())
-//   )
-// );
-
+  mounted() {
+    let that = this;
+    axios
+      .get("bookings", {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+        params: {
+          status: 1,
+        },
+      })
+      .then(function (response) {
+        let _bookings = response.data.bookings;
+        if (_bookings) {
+          that.bookings = _bookings;
+        }
+      });
+  },
+};
 </script>
 
 <style scoped>
@@ -93,6 +109,5 @@ axios.get('bookings',
   padding: 15px;
   background-color: #ecf5ff;
 }
-
 </style>
 
