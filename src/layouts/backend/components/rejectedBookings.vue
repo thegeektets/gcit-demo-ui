@@ -61,6 +61,17 @@
             </div>
           </template>
         </el-table-column>
+          <el-table-column :align="right" label="Rejected Bookings">
+          <template #header>
+            <div class="booking-details-table--title">
+              <el-input
+                v-model="search"
+                size="large"
+                placeholder="Type to search"
+                class="booking-details-search--input"
+              />
+            </div>
+          </template>
         <el-table-column prop="name" label="Customer" />
         <el-table-column prop="phone" label="Phone No" />
         <el-table-column label="Pickup Date" :width="200">
@@ -89,6 +100,7 @@
           <template #default="props">
             {{ formatCurrency(props.row.booking_amount) }}
           </template>
+        </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -177,6 +189,11 @@ export default {
 }
 .booking-info-car--item {
   margin-bottom: 10px;
+}
+.el-input.el-input--large.booking-details-search--input {
+    width: 30%;
+    float: right;
+    margin: 15px;
 }
 </style>
 

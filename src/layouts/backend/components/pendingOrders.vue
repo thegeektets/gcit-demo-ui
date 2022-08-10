@@ -61,7 +61,7 @@
                 >
                   Start Trip
                 </el-button>
-                 <el-button
+                <el-button
                   @click="orderAction(4, props.row.order_id)"
                   color="#DD0E34"
                   size="large"
@@ -72,35 +72,48 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="order_no" label="Order No" :width="110"/>
-        <el-table-column prop="name" label="Customer" />
-        <el-table-column prop="phone" label="Phone No" />
-        <el-table-column label="Pickup Date">
-          <template #default="props">
-            {{ formatDate(props.row.pickup_date) }}
+        
+        <el-table-column :align="right" label="Pending Orders">
+          <template #header>
+            <div class="order-details-table--title">
+              <el-input
+                v-model="search"
+                size="large"
+                placeholder="Type to search"
+                class="order-details-search--input"
+              />
+            </div>
           </template>
-        </el-table-column>
-        <el-table-column label="Return Date">
-          <template #default="props">
-            {{ formatDate(props.row.return_date) }}
-          </template>
-        </el-table-column>
+          <el-table-column prop="order_no" label="Order No" :width="110" />
+          <el-table-column prop="name" label="Customer" />
+          <el-table-column prop="phone" label="Phone No" />
+          <el-table-column label="Pickup Date">
+            <template #default="props">
+              {{ formatDate(props.row.pickup_date) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="Return Date">
+            <template #default="props">
+              {{ formatDate(props.row.return_date) }}
+            </template>
+          </el-table-column>
 
-        <el-table-column
-          prop="pickup_location_name"
-          label="Pickup Location"
-          width="200"
-        />
-        <el-table-column label="Car Type">
-          <template #default="props">
-            {{ props.row.make }} {{ props.row.model }}
-          </template>
-        </el-table-column>
+          <el-table-column
+            prop="pickup_location_name"
+            label="Pickup Location"
+            width="200"
+          />
+          <el-table-column label="Car Type">
+            <template #default="props">
+              {{ props.row.make }} {{ props.row.model }}
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="order_amount" label="Amount">
-          <template #default="props">
-            {{ formatCurrency(props.row.order_amount) }}
-          </template>
+          <el-table-column prop="order_amount" label="Amount">
+            <template #default="props">
+              {{ formatCurrency(props.row.order_amount) }}
+            </template>
+          </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -182,5 +195,10 @@ button.el-button.el-button--large {
 }
 .order-info-car--item {
   margin-bottom: 10px;
+}
+.el-input.el-input--large.order-details-search--input {
+  width: 30%;
+  float: right;
+  margin: 15px;
 }
 </style>

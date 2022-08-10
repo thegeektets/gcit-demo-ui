@@ -61,6 +61,17 @@
             </div>
           </template>
         </el-table-column>
+             <el-table-column :align="right" label="Cancelled Orders">
+          <template #header>
+            <div class="order-details-table--title">
+              <el-input
+                v-model="search"
+                size="large"
+                placeholder="Type to search"
+                class="order-details-search--input"
+              />
+            </div>
+          </template>
         <el-table-column prop="order_no" label="Order No" :width="110" />
         <el-table-column prop="name" label="Customer" />
         <el-table-column prop="phone" label="Phone No" />
@@ -90,6 +101,7 @@
           <template #default="props">
             {{ formatCurrency(props.row.order_amount) }}
           </template>
+        </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -178,6 +190,11 @@ export default {
 }
 .order-info-car--item {
   margin-bottom: 10px;
+}
+.el-input.el-input--large.order-details-search--input {
+    width: 30%;
+    float: right;
+    margin: 15px;
 }
 </style>
 

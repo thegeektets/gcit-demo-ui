@@ -52,6 +52,18 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column :align="right" label="Meight Owners">
+          <template #header>
+            <div class="owner-details-table--title">
+                <el-input
+              v-model="search"
+              size="large"
+              placeholder="Type to search"
+              class="owner-details-search--input"
+            />
+            </div>
+          
+          </template>
         <el-table-column prop="name" label="Owner Name" />
         <el-table-column prop="phone" label="Phone No" />
         <el-table-column prop="email" label="Email" />
@@ -81,6 +93,8 @@
             </el-tag>
           </template>
         </el-table-column>
+                </el-table-column>
+
       </el-table>
     </div>
   </div>
@@ -180,8 +194,7 @@ export default {
   font-size: 14px;
   margin-bottom: 25px;
   font-weight: 400;
-    text-align: center;
-
+  text-align: center;
 }
 .owner-info-owner--item {
   margin-bottom: 10px;
@@ -194,6 +207,11 @@ export default {
 }
 .owner-info-car--item {
   margin-bottom: 10px;
+}
+.el-input.el-input--large.owner-details-search--input {
+    width: 30%;
+    float: right;
+    margin: 15px;
 }
 </style>
 

@@ -49,8 +49,6 @@
                   <div class="booking-info-car--item">
                     Car Location : {{ props.row.location_name }}
                   </div>
-
-
                 </div>
               </div>
               <div class="booking-actions">
@@ -72,34 +70,46 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="Customer" />
-        <el-table-column prop="phone" label="Phone No" />
-        <el-table-column label="Pickup Date" :width="200">
-          <template #default="props">
-            {{ formatDate(props.row.pickup_date) }}
+        <el-table-column :align="right" label="Accepted Bookings">
+          <template #header>
+            <div class="booking-details-table--title">
+              <el-input
+                v-model="search"
+                size="large"
+                placeholder="Type to search"
+                class="booking-details-search--input"
+              />
+            </div>
           </template>
-        </el-table-column>
-        <el-table-column label="Return Date" :width="200">
-          <template #default="props">
-            {{ formatDate(props.row.return_date) }}
-          </template>
-        </el-table-column>
+          <el-table-column prop="name" label="Customer" />
+          <el-table-column prop="phone" label="Phone No" />
+          <el-table-column label="Pickup Date" :width="200">
+            <template #default="props">
+              {{ formatDate(props.row.pickup_date) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="Return Date" :width="200">
+            <template #default="props">
+              {{ formatDate(props.row.return_date) }}
+            </template>
+          </el-table-column>
 
-        <el-table-column
-          prop="pickup_location_name"
-          label="Pickup Location"
-          width="200"
-        />
-        <el-table-column label="Car Type">
-          <template #default="props">
-            {{ props.row.make }} {{ props.row.model }}
-          </template>
-        </el-table-column>
+          <el-table-column
+            prop="pickup_location_name"
+            label="Pickup Location"
+            width="200"
+          />
+          <el-table-column label="Car Type">
+            <template #default="props">
+              {{ props.row.make }} {{ props.row.model }}
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="booking_amount" label="Amount">
-          <template #default="props">
-            {{ formatCurrency(props.row.booking_amount) }}
-          </template>
+          <el-table-column prop="booking_amount" label="Amount">
+            <template #default="props">
+              {{ formatCurrency(props.row.booking_amount) }}
+            </template>
+          </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -188,6 +198,11 @@ export default {
 }
 .booking-info-car--item {
   margin-bottom: 10px;
+}
+.el-input.el-input--large.booking-details-search--input {
+    width: 30%;
+    float: right;
+    margin: 15px;
 }
 </style>
 

@@ -52,6 +52,18 @@
             </div>
           </template>
         </el-table-column>
+            <el-table-column :align="right" label="Meight Customers">
+          <template #header>
+            <div class="customers-details-table--title">
+                <el-input
+              v-model="search"
+              size="large"
+              placeholder="Type to search"
+              class="customers-details-search--input"
+            />
+            </div>
+          
+          </template>
         <el-table-column prop="name" label="Customer Name" />
         <el-table-column prop="phone" label="Phone No" />
         <el-table-column prop="email" label="Email" />
@@ -80,6 +92,7 @@
               Pending
             </el-tag>
           </template>
+        </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -194,6 +207,11 @@ export default {
 }
 .customer-info-car--item {
   margin-bottom: 10px;
+}
+.el-input.el-input--large.customers-details-search--input {
+    width: 30%;
+    float: right;
+    margin: 15px;
 }
 </style>
 
