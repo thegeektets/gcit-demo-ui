@@ -1,17 +1,25 @@
 <template>
   <div>
     <div class="switch-language">
-      <!-- <el-dropdown size="large" :hide-timeout="50" placement="bottom-end" :hide-on-click="true">
-                <Icon name="fa fa-globe" color="var(--color-secondary)" size="28" />
-                <template #dropdown>
-                    <el-dropdown-menu class="chang-lang">
-                        <el-dropdown-item v-for="item in config.lang.langArray" :key="item.name"
-                            @click="editDefaultLang(item.name)">
-                            {{ item.value }}
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown> -->
+      <el-dropdown
+        size="large"
+        :hide-timeout="50"
+        placement="bottom-end"
+        :hide-on-click="true"
+      >
+        <Icon name="fa fa-globe" color="var(--color-secondary)" size="28" />
+        <template #dropdown>
+          <el-dropdown-menu class="chang-lang">
+            <el-dropdown-item
+              v-for="item in config.lang.langArray"
+              :key="item.name"
+              @click="editDefaultLang(item.name)"
+            >
+              {{ item.value }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
     <div @contextmenu.stop="" id="bubble" class="bubble">
       <canvas id="bubble-canvas" class="bubble-canvas"></canvas>
@@ -102,7 +110,6 @@ import {
 } from "/@/utils/validate";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import adminBookingsVue from "../adminBookings.vue";
 var timer: NodeJS.Timer;
 
 const config = useConfig();

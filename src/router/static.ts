@@ -21,7 +21,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
         // 管理员登录页
         path: '/admin/login',
         name: 'adminLogin',
-        component: () => import('/@/views/backend/login.vue'),
+        component: () => import('/@/layouts/backend/components/adminLogin.vue'),
         meta: {
             title: pageTitle('adminLogin'),
         },
@@ -32,6 +32,14 @@ const staticRoutes: Array<RouteRecordRaw> = [
         component: () => import('/@/layouts/backend/adminVehicles.vue'),
         meta: {
             title: ('Vehicles'),
+        },
+    },
+    {
+        path: '/admin/customers',
+        name: 'admincustomers',
+        component: () => import('/@/layouts/backend/adminCustomers.vue'),
+        meta: {
+            title: ('Customers'),
         },
     },
     {

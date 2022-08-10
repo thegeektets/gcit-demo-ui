@@ -1,7 +1,7 @@
 <template>
   <el-footer class="footer--wrap">
-    <p>@2022 Meight Mission Control</p> </el-footer
-  >>
+    <p>@2022 Meight Mission Control</p>
+  </el-footer>
 </template>
 <script lang="ts" setup>
 </script>
