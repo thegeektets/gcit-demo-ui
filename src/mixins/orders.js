@@ -1,31 +1,31 @@
 import { ElNotification } from "element-plus";
 import axios from "axios";
 
-export default{
-methods: {
-    async getBookings(bookingStatus) {
+export default {
+  methods: {
+    async getOrders(orderStatus) {
       let that = this;
       this.loading = true;
       await axios
-        .get("bookings", {
+        .get("orders", {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
           params: {
-            status: bookingStatus,
+            orderStatus: orderStatus,
           },
         })
         .then(function (response) {
-          let _bookings = response.data.bookings;
-          if (_bookings) {
-            that.bookings = _bookings;
+          let _orders = response.data.orders;
+          if (_orders) {
+            that.orders = _orders;
             that.loading = false;
           }
         })
         .catch(function (error) {
-            console.log("error", error);
-            that.loading = false;
-          });
+          console.log("error", error);
+          that.loading = false;
+        });
     },
     rowExpanded(row) {
       let ownerId = row.owner_id;
@@ -49,28 +49,28 @@ methods: {
           if (_user) {
             _ownerDetails = _user;
             console.log("row", row);
-            const index = that.bookings.findIndex((object) => {
-              return object.booking_id === row.booking_id;
+            const index = that.orders.findIndex((object) => {
+              return object.order_id === row.order_id;
             });
             console.log("index", index);
             that.ownerDetails[index] = _ownerDetails;
           }
         });
     },
-    async bookingAction(action, bookingId) {
-      console.log("bookingId", bookingId);
+    async orderAction(action, orderId) {
+      console.log("orderId", orderId);
       console.log("action", action);
       let that = this;
       this.loading = true;
       let userId = this.userId;
       let payload = {
-        booking_status: action,
+        order_status: action,
         user_id: userId,
       };
 
       axios
         .put(
-          `booking/${bookingId}`,
+          `order/${orderId}`,
           {
             ...payload,
           },
@@ -83,13 +83,13 @@ methods: {
         .then(function (response) {
           let _type = action == 2 ? "success" : "warning";
           ElNotification({
-            title: "Update booking",
+            title: "Update order",
             message: response.message,
             type: _type,
           });
 
           that.loading = false;
-          that.getBookings(this.bookingStatus);
+          that.getOrders(this.orderStatus);
         })
         .catch(function (error) {
           console.log("error", error);
@@ -98,7 +98,7 @@ methods: {
               ? error.response.data.message
               : "An error occurred, could not process request";
           ElNotification({
-            title: "Update booking",
+            title: "Update order",
             message,
             type: "error",
           });
@@ -107,4 +107,4 @@ methods: {
         });
     },
   },
-}
+};

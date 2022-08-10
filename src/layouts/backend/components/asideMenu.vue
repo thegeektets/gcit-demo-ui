@@ -14,6 +14,11 @@
         >
       </el-menu-item>
       <el-menu-item style="font-size: 15px">
+        <Icon name="fa fa-users" size="16" /><router-link to="/admin/owners"
+          >Customers</router-link
+        >
+      </el-menu-item>
+      <el-menu-item style="font-size: 15px">
         <Icon name="fa fa-car" size="16" /><router-link to="/admin/vehicles"
           >Vehicles</router-link
         >
@@ -21,11 +26,6 @@
       <el-menu-item style="font-size: 15px">
         <Icon name="fa fa-users" size="16" /><router-link to="/admin/owners"
           >Owners</router-link
-        >
-      </el-menu-item>
-      <el-menu-item style="font-size: 15px">
-        <Icon name="fa fa-users" size="16" /><router-link to="/admin/owners"
-          >Customers</router-link
         >
       </el-menu-item>
     </el-menu>

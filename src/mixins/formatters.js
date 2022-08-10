@@ -1,8 +1,10 @@
 import { format, parseISO } from "date-fns";
+import moment from 'moment';
+
 export default {
   methods: {
     formatDate(date) {
-      return format(parseISO(date), "MMM do yyyy, h:mm a");
+      return moment(date).format('MMM Do YYYY, h:mm A')
     },
 
     formatCurrency(amount) {

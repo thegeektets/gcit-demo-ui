@@ -1,86 +1,75 @@
 <template>
-  <div class="bookings">
+  <div class="orders">
     <div class="content">
       <el-table
         fixed
         v-loading="loading"
-        :data="bookings"
+        :data="orders"
         @expand-change="rowExpanded"
         style="width: 100%"
-        :header-cell-style="{ background: '#2856B8' }"
+        :header-cell-style="{ background: '#56B828' }"
         :header-row-style="{ color: 'white' }"
       >
         <el-table-column type="expand" fixed>
           <template #default="props">
-            <div class="booking-info--wrap">
-              <div class="booking-info--images">
+            <div class="order-info--wrap">
+              <div class="order-info--images">
                 <el-carousel>
                   <el-carousel-item
                     v-for="(photo, index) in formatJSON(props.row.photos)"
                     :key="index"
                   >
-                    <img :src="photo" class="booking-info--image" />
+                    <img :src="photo" class="order-info--image" />
                   </el-carousel-item>
                 </el-carousel>
               </div>
-              <div class="booking-info--details">
-                <div class="booking-info-owner--details">
-                  <div class="booking-info-owner--title">Owner Details</div>
-                  <div class="booking-info-owner--item">
+              <div class="order-info--details">
+                <div class="order-info-owner--details">
+                  <div class="order-info-owner--title">Owner Details</div>
+                  <div class="order-info-owner--item">
                     Owner Name : {{ ownerDetails[props.$index]["name"] }}
                   </div>
-                  <div class="booking-info-owner--item">
+                  <div class="order-info-owner--item">
                     Owner Location :
                     {{ ownerDetails[props.$index]["location_name"] }}
                   </div>
-                  <div class="booking-info-owner--item">
+                  <div class="order-info-owner--item">
                     Owner Email : {{ ownerDetails[props.$index]["email"] }}
                   </div>
-                  <div class="booking-info-owner--item">
+                  <div class="order-info-owner--item">
                     Owner Phone : {{ ownerDetails[props.$index]["phone"] }}
                   </div>
                 </div>
-                <div class="booking-info-car--details">
-                  <div class="booking-info-car--title">Car Details</div>
-                  <div class="booking-info-car--item">
+                <div class="order-info-car--details">
+                  <div class="order-info-car--title">Car Details</div>
+                  <div class="order-info-car--item">
                     Number Plate : {{ props.row.plate_number }}
                   </div>
-                  <div class="booking-info-car--item">
+                  <div class="order-info-car--item">
                     Car Location : {{ props.row.location_name }}
                   </div>
                 </div>
               </div>
-              <div class="booking-actions">
-                <div class="booking-actions--title">
-                  Created On : {{ formatDate(props.row.booking_created_at) }}
+              <div class="order-actions">
+                <div class="order-actions--title">
+                  Created On : {{ formatDate(props.row.order_created_at) }}
                 </div>
-                <el-button
-                  @click="bookingAction(2, props.row.booking_id)"
-                  color="#2856b8"
-                  size="large"
-                >
-                  Confirm Booking
-                </el-button>
-
-                <el-button
-                  @click="bookingAction(3, props.row.booking_id)"
-                  color="#DD0E34"
-                  size="large"
-                >
-                  Reject Booking
-                </el-button>
+                <div class="order-actions--title">
+                  Updated On : {{ formatDate(props.row.order_updated_at) }}
+                </div>
               </div>
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="order_no" label="Order No" :width="110" />
         <el-table-column prop="name" label="Customer" />
         <el-table-column prop="phone" label="Phone No" />
-        <el-table-column label="Pickup Date" :width="200">
+        <el-table-column label="Pickup Date">
           <template #default="props">
             {{ formatDate(props.row.pickup_date) }}
           </template>
         </el-table-column>
-        <el-table-column label="Return Date" :width="200">
+        <el-table-column label="Return Date">
           <template #default="props">
             {{ formatDate(props.row.return_date) }}
           </template>
@@ -97,9 +86,9 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="booking_amount" label="Amount">
+        <el-table-column prop="order_amount" label="Amount">
           <template #default="props">
-            {{ formatCurrency(props.row.booking_amount) }}
+            {{ formatCurrency(props.row.order_amount) }}
           </template>
         </el-table-column>
       </el-table>
@@ -107,40 +96,47 @@
   </div>
 </template>
 
+
 <script>
 import formatters from "../../../mixins/formatters";
-import bookings from "../../../mixins/bookings";
+import orders from "../../../mixins/orders";
 
 export default {
-  mixins: [formatters, bookings],
+  mixins: [formatters, orders],
 
   data() {
     return {
       loading: false,
-      bookings: [],
+      orders: [],
       userId: 4,
       ownerDetails: [],
-      bookingStatus: 1,
+      orderStatus: 3,
       token:
         "Y2w2bTFqajJtMDAwMHczeGQzeWpkNWJpaQ.2G4Ntk-QqD8lUrtYuw0eg5dembtJKkQnE0XRcKwJ5aTcLfK_07YA84vGT2-F",
     };
   },
-
   mounted() {
-    this.getBookings(this.bookingStatus);
+    this.getOrders(this.orderStatus);
   },
 };
 </script>
+
 <style scoped>
-button.el-button.el-button--large {
-  display: block;
-  margin: 10px;
-  width: 80%;
+/* .el-table {
+  border: 1px solid #c0c4cc;
+  margin-top: 50px;
+} */
+/* .orders {
+   margin:70px 5px 5px 5px;
+} */
+.nav {
+  padding: 15px;
+  background-color: #ecf5ff;
 }
-.booking-info--wrap {
+.order-info--wrap {
   padding: 15px;
 }
-.booking-info--images {
+.order-info--images {
   background: #f1f1f1;
   width: 40%;
   float: left;
@@ -148,39 +144,40 @@ button.el-button.el-button--large {
   height: 250px;
   margin-bottom: 20px;
 }
-.booking-info--image {
+.order-info--image {
   object-fit: contain;
   width: 100%;
   height: 250px;
 }
-.booking-info--details {
+.order-info--details {
   width: 30%;
   float: left;
 }
-.booking-actions {
+.order-actions {
   width: 25%;
   float: right;
 }
-.booking-actions--title {
+.order-actions--title {
   color: #2856b8;
   margin-bottom: 25px;
 }
-.booking-info-owner--title {
+.order-info-owner--title {
   color: #dd0e34;
   font-size: 14px;
   margin-bottom: 10px;
   font-weight: 400;
 }
-.booking-info-owner--item {
+.order-info-owner--item {
   margin-bottom: 10px;
 }
-.booking-info-car--title {
+.order-info-car--title {
   color: #dd0e34;
   font-size: 14px;
   margin-bottom: 10px;
   font-weight: 400;
 }
-.booking-info-car--item {
+.order-info-car--item {
   margin-bottom: 10px;
 }
 </style>
+

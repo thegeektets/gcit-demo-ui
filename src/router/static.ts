@@ -29,7 +29,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
     {
         path: '/admin/vehicles',
         name: 'adminvehicles',
-        component: () => import('/@/layouts/backend/vehicles.vue'),
+        component: () => import('/@/layouts/backend/adminVehicles.vue'),
         meta: {
             title: ('Vehicles'),
         },
