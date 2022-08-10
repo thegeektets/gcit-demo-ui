@@ -57,14 +57,6 @@
                 <div class="booking-actions--title">
                   Updated On : {{ formatDate(props.row.booking_updated_at) }}
                 </div>
-
-                <el-button
-                  @click="bookingAction(4, props.row.booking_id)"
-                  color="#DD0E34"
-                  size="large"
-                >
-                  Cancel Booking
-                </el-button>
               </div>
             </div>
           </template>
