@@ -25,6 +25,7 @@ export default {
         .catch(function (error) {
           console.log("error", error);
           that.loading = false;
+          that.orders = [];
         });
     },
     rowExpanded(row) {

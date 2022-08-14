@@ -1,8 +1,8 @@
 import { ElNotification } from "element-plus";
 import axios from "axios";
 
-export default{
-methods: {
+export default {
+  methods: {
     async getBookings(bookingStatus) {
       let that = this;
       this.loading = true;
@@ -23,9 +23,10 @@ methods: {
           }
         })
         .catch(function (error) {
-            console.log("error", error);
-            that.loading = false;
-          });
+          console.log("error", error);
+          that.loading = false;
+          that.bookings = [];
+        });
     },
     rowExpanded(row) {
       let ownerId = row.owner_id;
@@ -107,4 +108,4 @@ methods: {
         });
     },
   },
-}
+};
