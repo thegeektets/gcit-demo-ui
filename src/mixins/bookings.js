@@ -84,12 +84,12 @@ methods: {
           let _type = action == 2 ? "success" : "warning";
           ElNotification({
             title: "Update booking",
-            message: response.message,
+            message: response.data.message,
             type: _type,
           });
 
           that.loading = false;
-          that.getBookings(this.bookingStatus);
+          that.getBookings(that.bookingStatus);
         })
         .catch(function (error) {
           console.log("error", error);

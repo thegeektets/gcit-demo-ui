@@ -62,10 +62,8 @@ export default {
       console.log("action", action);
       let that = this;
       this.loading = true;
-      let userId = this.userId;
       let payload = {
-        order_status: action,
-        user_id: userId,
+        orderStatus: action,
       };
 
       axios
@@ -81,15 +79,16 @@ export default {
           }
         )
         .then(function (response) {
+
           let _type = action == 2 ? "success" : "warning";
           ElNotification({
             title: "Update order",
-            message: response.message,
+            message: response.data.message,
             type: _type,
           });
 
           that.loading = false;
-          that.getOrders(this.orderStatus);
+          that.getOrders(that.orderStatus);
         })
         .catch(function (error) {
           console.log("error", error);
@@ -105,6 +104,7 @@ export default {
 
           that.loading = false;
         });
+        this.loading = false;
     },
   },
 };
