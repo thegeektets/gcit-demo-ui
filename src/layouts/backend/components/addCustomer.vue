@@ -1,204 +1,176 @@
-<template>
-  <div class="bookings">
-    <div class="content">
-      <el-table
-        fixed
-        v-loading="loading"
-        :data="bookings"
-        @expand-change="rowExpanded"
-        style="width: 100%"
-        :header-cell-style="{ background: '#2856B8' }"
-        :header-row-style="{ color: 'white' }"
+
+  <template #default="props">
+  <div class="details--form-wrap">
+    <el-form ref="formRef" :model="customerDetailsForm" @submit="submitDetails(formRef)" >
+      <el-form-item
+        prop="name"
+        :rules="[
+          {
+            required: true,
+            message: 'Please input full name',
+            trigger: 'blur',
+          },
+        ]"
       >
-        <el-table-column type="expand" fixed>
-          <template #default="props">
-            <div class="booking-info--wrap">
-              <div class="booking-info--images">
-                <el-carousel>
-                  <el-carousel-item
-                    v-for="(photo, index) in formatJSON(props.row.photos)"
-                    :key="index"
-                  >
-                    <img :src="photo" class="booking-info--image" />
-                  </el-carousel-item>
-                </el-carousel>
-              </div>
-              <div class="booking-info--details">
-                <div class="booking-info-owner--details">
-                  <div class="booking-info-owner--title">Owner Details</div>
-                  <div class="booking-info-owner--item">
-                    Owner Name : {{ ownerDetails[props.$index]["name"] }}
-                  </div>
-                  <div class="booking-info-owner--item">
-                    Owner Location :
-                    {{ ownerDetails[props.$index]["location_name"] }}
-                  </div>
-                  <div class="booking-info-owner--item">
-                    Owner Email : {{ ownerDetails[props.$index]["email"] }}
-                  </div>
-                  <div class="booking-info-owner--item">
-                    Owner Phone : {{ ownerDetails[props.$index]["phone"] }}
-                  </div>
-                </div>
-                <div class="booking-info-car--details">
-                  <div class="booking-info-car--title">Car Details</div>
-                  <div class="booking-info-car--item">
-                    Number Plate : {{ props.row.plate_number }}
-                  </div>
-                  <div class="booking-info-car--item">
-                    Car Location : {{ props.row.location_name }}
-                  </div>
-                </div>
-              </div>
-              <div class="booking-actions">
-                <div class="booking-actions--title">
-                  Created On : {{ formatDate(props.row.booking_created_at) }}
-                </div>
-                <el-button
-                  @click="bookingAction(2, props.row.booking_id)"
-                  color="#2856b8"
-                  size="large"
-                >
-                  Confirm Booking
-                </el-button>
+        <el-input
+          v-model="customerDetailsForm.name"
+          size="large"
+          placeholder="Full Name"
+          :required="true"
+          class="customers-details-search--input"
+        />
+      </el-form-item>
+      <el-form-item
+        prop="email"
+        :rules="[
+          {
+            required: true,
+            message: 'Please input email address',
+            trigger: 'blur',
+          },
+          {
+            type: 'email',
+            message: 'Please input correct email address',
+            trigger: ['blur', 'change'],
+          },
+        ]"
+      >
+        <el-input
+          v-model="customerDetailsForm.email"
+          type="email"
+          size="large"
+          :required="true"
+          placeholder="Email Address"
+          class="customers-details-search--input"
+        />
+      </el-form-item>
+      <el-form-item
+        prop="phone"
+        :rules="[
+          {
+            required: true,
+            message: 'Please input phone number',
+            trigger: 'blur',
+          },
+        ]"
+      >
+        <el-input
+          v-model="customerDetailsForm.phone"
+          size="large"
+          :required="true"
+          placeholder="Phone"
+          class="customers-details-search--input"
+        />
+      </el-form-item>
 
-                <el-button
-                  @click="bookingAction(3, props.row.booking_id)"
-                  color="#DD0E34"
-                  size="large"
-                >
-                  Reject Booking
-                </el-button>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column :align="right" label="Pending Bookings">
-          <template #header>
-            <div class="booking-details-table--title">
-              <el-input
-                v-model="search"
-                size="large"
-                placeholder="Type to search"
-                class="booking-details-search--input"
-              />
-            </div>
-          </template>
+      <el-form-item
+        prop="address"
+        :rules="[
+          {
+            required: true,
+            message: 'Please input address',
+            trigger: 'blur',
+          },
+        ]"
+      >
+        <el-input
+          v-model="customerDetailsForm.address"
+          size="large"
+          :required="true"
+          placeholder="Address"
+          class="customers-details-search--input"
+        />
+      </el-form-item>
 
-          <el-table-column prop="name" label="Customer" />
-          <el-table-column prop="phone" label="Phone No" />
-          <el-table-column label="Pickup Date" :width="200">
-            <template #default="props">
-              {{ formatDate(props.row.pickup_date) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Return Date" :width="200">
-            <template #default="props">
-              {{ formatDate(props.row.return_date) }}
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            prop="pickup_location_name"
-            label="Pickup Location"
-            width="200"
-          />
-          <el-table-column label="Car Type">
-            <template #default="props">
-              {{ props.row.make }} {{ props.row.model }}
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="booking_amount" label="Amount">
-            <template #default="props">
-              {{ formatCurrency(props.row.booking_amount) }}
-            </template>
-          </el-table-column>
-        </el-table-column>
-      </el-table>
-    </div>
+      <el-button @click="submitDetails(formRef)" color="#0d62a4" size="large">
+        Submit Details
+      </el-button>
+    </el-form>
   </div>
 </template>
+       
 
-<script>
-import formatters from "../../../mixins/formatters";
-import bookings from "../../../mixins/bookings";
+<script lang="ts" setup>
+import { reactive, ref } from "vue";
+import { ElNotification, FormInstance } from "element-plus";
+import axios from "axios";
 
-export default {
-  mixins: [formatters, bookings],
+const formRef = ref<FormInstance>();
+const customerDetailsForm = reactive<{
+  email: string;
+  name: string;
+  address: string;
+  phone: string;
+}>({
+  email: "",
+  name: "",
+  address: "",
+  phone: "",
+});
 
-  data() {
-    return {
-      loading: false,
-      bookings: [],
-      userId: 4,
-      ownerDetails: [],
-      bookingStatus: 1,
-      token:
-        "Y2w2bTFqajJtMDAwMHczeGQzeWpkNWJpaQ.2G4Ntk-QqD8lUrtYuw0eg5dembtJKkQnE0XRcKwJ5aTcLfK_07YA84vGT2-F",
-    };
-  },
-
-  mounted() {
-    this.getBookings(this.bookingStatus);
-  },
+const submitDetails = (formEl: FormInstance | undefined) => {
+  if (!formEl) {
+    ElNotification({
+      title: "Invalid details",
+      type: "error",
+    });
+    return;
+  }
+  formEl.validate((valid) => {
+    if (valid) {
+      axios
+        .post(
+          `submit/`,
+          {
+            ...customerDetailsForm,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + "ALDJAK23423JKSLAJAF23423J23SAD3",
+            },
+          }
+        )
+        .then(function (response) {
+          ElNotification({
+            title: "Submit",
+            message: response.data.message,
+            type: "success",
+          });
+        })
+        .catch(function (error) {
+          console.log("error", error);
+          ElNotification({
+            title: "Network Error",
+            message: error,
+            type: "error",
+          });
+        });
+    } else {
+      console.log("error submit!", valid);
+      ElNotification({
+            title: "Validation Error",
+            type: "error",
+          });
+      return false;
+    }
+  });
 };
 </script>
 <style scoped>
-button.el-button.el-button--large {
+button.el-button {
   display: block;
-  margin: 10px;
-  width: 80%;
-}
-.booking-info--wrap {
-  padding: 15px;
-}
-.booking-info--images {
-  background: #f1f1f1;
-  width: 40%;
-  float: left;
-  margin-right: 20px;
-  height: 250px;
-  margin-bottom: 20px;
-}
-.booking-info--image {
-  object-fit: contain;
   width: 100%;
-  height: 250px;
 }
-.booking-info--details {
-  width: 30%;
-  float: left;
+
+.el-form-item {
+  padding-bottom: 10px;
 }
-.booking-actions {
-  width: 25%;
-  float: right;
-}
-.booking-actions--title {
-  color: #2856b8;
-  margin-bottom: 25px;
-}
-.booking-info-owner--title {
-  color: #dd0e34;
-  font-size: 14px;
-  margin-bottom: 10px;
-  font-weight: 400;
-}
-.booking-info-owner--item {
+.el-input {
   margin-bottom: 10px;
 }
-.booking-info-car--title {
-  color: #dd0e34;
-  font-size: 14px;
-  margin-bottom: 10px;
-  font-weight: 400;
-}
-.booking-info-car--item {
-  margin-bottom: 10px;
-}
-.el-input.el-input--large.booking-details-search--input {
-    width: 30%;
-    float: right;
-    margin: 15px;
+.details--form-wrap {
+  width: 50vw;
+  margin: auto;
+  padding: 30px;
 }
 </style>

@@ -17,7 +17,7 @@
   display: block;
   width: 100%;
   margin-bottom: 50px;
-  background-color: #dd0e34;
+  background-color: #98b735;
   position: fixed;
   z-index: 10;
 }
