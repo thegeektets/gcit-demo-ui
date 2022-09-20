@@ -2,7 +2,7 @@
     <div class="page">
         <div class="container">
             <div class="font-h1">:(</div>
-            <div class="tip">{{ $t('404.problems tip') }}</div>
+            <div class="tip">{{ $t('Your website has encountered some problems. The system is optimizing and reporting fault information. We will improve and reduce this situation in the future') }}</div>
             <div class="complete">
                 {{ $t('complete') }} <span class="percentage">{{ complete }}</span
                 >%
@@ -12,7 +12,7 @@
                     <img src="~/assets/qr.png" alt="QR Code" />
                 </div>
                 <div class="stopcode">
-                    <div class="stopcode-text">{{ $t('404.We will automatically return to the previous page when we are finished') }}</div>
+                    <div class="stopcode-text">{{ $t('We will automatically return to the previous page when we are finished') }}</div>
                     <div class="stopcode-text">
                         <router-link class="stopcode-a" to="">
                             <span @click="$router.back()">{{ $t('Back to previous page') }}</span>

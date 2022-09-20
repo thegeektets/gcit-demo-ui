@@ -1,5 +1,5 @@
 <template>
-    <el-config-provider :locale="lang">
+    <el-config-provider>
         <router-view></router-view>
     </el-config-provider>
 </template>
@@ -14,18 +14,10 @@ import { useConfig } from '/@/stores/config'
 const config = useConfig()
 const route = useRoute()
 
-const { t, getLocaleMessage } = useI18n()
-const lang = getLocaleMessage(config.lang.defaultLang) as any
 onMounted(() => {
     iconfontInit()
 })
 
-watch(
-    () => route.path,
-    () => {
-        setTitleFromRoute(t)
-    }
-)
 </script>
 <style>
 @import url('./styles/app.scss');

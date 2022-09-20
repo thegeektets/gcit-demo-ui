@@ -1,6 +1,6 @@
 <template>
   <el-footer class="footer--wrap">
-    <p>@2022 Meight Mission Control</p>
+    <p>@2022  GCIT Systems </p>
   </el-footer>
 </template>
 <script lang="ts" setup>

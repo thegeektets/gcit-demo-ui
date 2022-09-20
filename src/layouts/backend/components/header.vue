@@ -2,7 +2,7 @@
   <el-header class="header--wrap">
     <router-link to="/">
       <img
-        src="../../../assets/meight-logo-red.png"
+        src="../../../assets/logo.png"
         alt="logo"
         class="navg--logo"
       />
@@ -26,5 +26,6 @@
   height: 60px;
   align-content: right;
   float: left;
+  padding: 10px;
 }
 </style>

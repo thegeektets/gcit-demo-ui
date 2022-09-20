@@ -3,7 +3,7 @@
         <div class="container">
             <div class="fbi">401 WARNING</div>
             <div class="warning">
-                {{ $t('401.noPowerTip') }}
+                {{ $t("It's not what you want, but we're serious. I just want to tell you in a special way that you don't have permission to access this page, or the file is invalid. You can contact the website administrator to solve the problem faster, or go back to the front page of the website to browse other pages.") }}
             </div>
             <div class="page-footer">
                 <el-button-group>

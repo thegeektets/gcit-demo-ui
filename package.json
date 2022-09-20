@@ -1,5 +1,5 @@
 {
-    "name": "meight-mission-control-ui",
+    "name": "ui-vue-gcit",
     "version": "1.0.0",
     "scripts": {
         "dev": "vite --force",
